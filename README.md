@@ -1,0 +1,1 @@
+# django_artgallery_project
