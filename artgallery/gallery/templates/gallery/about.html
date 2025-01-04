@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Art Gallery</title>
+    <link rel="stylesheet" href="{% static 'gallery/styles.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <h2>Art Gallery</h2>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'gallery' %}">Gallery</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'cart' %}">Cart</a>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section">
+        <h1>About Our Art Gallery</h1>
+        
+        <p>Welcome to our Art Gallery, a place where creativity, culture, and community come together. Our gallery features a diverse collection of contemporary and classic artworks from talented artists across the globe. Whether you're an art enthusiast, a collector, or just someone looking to explore beautiful pieces of art, our gallery offers something for everyone.</p>
+        
+        <h2>Our Vision</h2>
+        <p>Our vision is to bridge the gap between art creators and art lovers. We aim to support artists by providing a platform for their works to be displayed and appreciated, while also offering art collectors the opportunity to discover unique pieces for their homes or businesses.</p>
+        
+        <h2>Our Artists</h2>
+        <p>We collaborate with a wide range of artists, from emerging talents to established names. Our artists bring a variety of styles, mediums, and themes to the gallery, ensuring that every visit offers new experiences and perspectives.</p>
+
+        <h2>Why Choose Us?</h2>
+        <ul>
+            <li><strong>Quality Art:</strong> We ensure that every piece in our collection meets the highest standards of quality and originality.</li>
+            <li><strong>Global Talent:</strong> Our artists come from all corners of the world, offering a diverse and dynamic collection of artworks.</li>
+            <li><strong>Exceptional Service:</strong> We pride ourselves on providing excellent customer service, whether you're buying your first piece of art or expanding your collection.</li>
+        </ul>
+
+        <h2>Contact Us</h2>
+        <p>If you're interested in learning more about our gallery, or if you'd like to inquire about a specific artwork or artist, feel free to <a href="{% url 'contact' %}">contact us</a>.</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Art Gallery. All Rights Reserved.</p>
+    </div>
+
+    <style>
+      /* General Styles */
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          color: #444;
+          background-color: #f9f9f9;
+      }
+  
+      /* Navbar */
+      .navbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #333;
+          padding: 1rem 2rem;
+          color: white;
+      }
+  
+      .navbar .logo h2 {
+          margin: 0;
+          color: #fff;
+      }
+  
+      .navbar .nav-links a {
+          text-decoration: none;
+          color: #fff;
+          margin: 0 1rem;
+          transition: color 0.3s ease-in-out;
+      }
+  
+      .navbar .nav-links a:hover {
+          color: #ff9800;
+      }
+  
+      /* About Section */
+      .about-section {
+          padding: 2rem;
+          max-width: 900px;
+          margin: 2rem auto;
+          background: white;
+          box-shadow: 0 4px 6px rgba(137, 17, 87, 0.1);
+          border-radius: 10px;
+          animation: fadeIn 1s ease-out;
+      }
+  
+      .about-section h1,
+      .about-section h2 {
+          color: #333;
+      }
+  
+      .about-section p {
+          margin-bottom: 1rem;
+      }
+  
+      .about-section ul {
+          list-style-type: disc;
+          margin-left: 20px;
+      }
+  
+      .about-section ul li {
+          margin-bottom: 0.5rem;
+      }
+  
+      .about-section a {
+          color: #ff9800;
+          text-decoration: none;
+          transition: color 0.3s ease-in-out;
+      }
+  
+      .about-section a:hover {
+          color: #333;
+      }
+  
+      /* Footer */
+      .footer {
+          background-color: #333;
+          color: white;
+          text-align: center;
+          padding: 1rem 0;
+          margin-top: 2rem;
+      }
+  
+      .footer p {
+          margin: 0;
+          font-size: 0.9rem;
+      }
+  
+      /* Button Interaction (Example for Contact Us) */
+      .about-section a.button {
+          display: inline-block;
+          padding: 0.8rem 1.5rem;
+          background-color: #ff9800;
+          color: white;
+          border-radius: 5px;
+          text-align: center;
+          transition: transform 0.3s, background-color 0.3s ease-in-out;
+      }
+  
+      .about-section a.button:hover {
+          background-color: #333;
+          transform: translateY(-5px);
+      }
+  
+      /* Animations */
+      @keyframes fadeIn {
+          from {
+              opacity: 0;
+              transform: translateY(20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+  </style>
+  

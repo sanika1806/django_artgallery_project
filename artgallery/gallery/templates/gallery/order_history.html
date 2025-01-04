@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order History</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+      margin-top: 20px;
+    }
+
+    .order {
+      background: #fff;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .order:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .order h3 {
+      margin-bottom: 10px;
+      color: #3f51b5;
+    }
+
+    .order p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .order p:nth-child(4) {
+      font-weight: bold;
+    }
+
+    .order ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .order ul li {
+      background: #f9f9f9;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .order ul li:hover {
+      background: #e0f7fa;
+    }
+
+    .order .paid {
+      color: #4caf50;
+    }
+
+    .order .unpaid {
+      color: #f44336;
+    }
+
+    p.no-orders {
+      text-align: center;
+      font-size: 18px;
+      color: #757575;
+    }
+
+    .back-home {
+      display: block;
+      width: 150px;
+      margin: 20px auto;
+      padding: 10px;
+      text-align: center;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .back-home:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Orders</h1>
+  <a href="/" class="back-home">Back to Home</a>
+  {% for order in orders %}
+      <div class="order">
+          <h3>Order ID: {{ order.id }}</h3>
+          <p>Total: ₹{{ order.total_price }}</p>
+          <p>Created At: {{ order.created_at }}</p>
+          <p>Status: <span class="{% if order.is_paid %}paid{% else %}unpaid{% endif %}">{% if order.is_paid %} Paid {% else %} Unpaid {% endif %}</span></p>
+          <ul>
+              {% for item in order.items.all %}
+                  <li>{{ item.art_piece.title }} - ₹{{ item.art_piece.price }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+  {% empty %}
+      <p class="no-orders">No orders found.</p>
+  {% endfor %}
+  
+</body>
+</html>

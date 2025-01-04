@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Art Gallery</title>
+    <link rel="stylesheet" href="{% static 'gallery/styles.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <h2>Art Gallery</h2>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'gallery' %}">Gallery</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'cart' %}">Cart</a> <!-- Cart link added -->
+        </div>
+        <!-- Search Bar Section -->
+        <div class="search-container">
+            <form method="GET" action="{% url 'gallery' %}">
+                <input type="text" name="query" placeholder="Search for artworks..." value="{{ request.GET.query }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        {% if not art_pieces %}
+            <p>No artworks found matching your search.</p>
+        {% endif %}
+    </div>
+
+    <!-- Gallery Section -->
+    <div class="gallery-section">
+        <h1>Art Gallery</h1>
+        <p>Explore our curated collection of art pieces.</p>
+
+        <!-- Display Message -->
+        {% if message %}
+            <div class="message">
+                <p>{{ message }}</p>
+            </div>
+        {% endif %}
+
+        <div class="gallery-items">
+            {% for art_piece in art_pieces %}
+                <div class="gallery-item">
+                    <img src="{{ art_piece.image.url }}" alt="{{ art_piece.title }}" class="art-image">
+                    <div class="item-details">
+                        <h3>{{ art_piece.title }}</h3>
+                        <p>Price: ₹{{ art_piece.price }}</p>
+                        <p>Artist: {{ art_piece.artist_name }}</p>
+                        <p>Description: {{ art_piece.description }}</p>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="art_piece_id" value="{{ art_piece.id }}">
+                            <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Art Gallery. All Rights Reserved.</p>
+    </div>
+
+    <style>
+        /* Gallery Section Styling */
+        .gallery-section {
+            padding: 2rem;
+            max-width: 1800px;
+            margin: 0 auto;
+            background-image: linear-gradient(to bottom,rgb(130, 255, 173),yellow);
+        }
+
+        .gallery-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted for better responsiveness */
+            gap: 1.5rem;
+        }
+
+        /* Card Styling */
+        .gallery-item {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(192, 16, 16, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Card Image Styling */
+        .art-image {
+            width: 100%;
+            height: 250px; /* Ensuring image height consistency */
+            object-fit: cover; /* Ensure images cover the area */
+            transition: transform 0.3s ease;
+        }
+
+        /* Card Details */
+        .item-details {
+            padding: 1rem;
+            text-align: center;
+            background-color: #f9f9f9;
+            border-top: 2px solid #ddd;
+        }
+
+        .item-details h3 {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .item-details p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Add to Cart Button Styling */
+        .add-to-cart-button {
+            padding: 0.6rem 1.2rem;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .add-to-cart-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* Slightly enlarge button */
+        }
+
+        /* Hover Effect for Card */
+        .gallery-item:hover {
+            transform: translateY(-5px); /* Lift the card on hover */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow effect */
+        }
+
+        /* Hover Effect for Image */
+        .gallery-item:hover .art-image {
+            transform: scale(1.1); /* Slightly zoom in the image */
+        }
+
+        /* Message Styling */
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .gallery-items {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ensures small screen responsiveness */
+            }
+        }
+
+        /* Search Bar Styles */
+        .search-container {
+            text-align: center;
+        }
+
+        .search-container form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid #333;
+            border-radius: 30px;
+            padding: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-container input {
+            width: 80%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-container input:focus {
+            border: 2px solid #ff7eb3; /* Highlight border color on focus */
+        }
+
+        .search-container button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #ff7eb3;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #e63946;
+        }
+    </style>
+</body>
+</html>

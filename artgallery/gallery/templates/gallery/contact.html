@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Art Gallery</title>
+    <link rel="stylesheet" href="{% static 'gallery/styles.css' %}">
+    <style>
+        /* Animated Background */
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('/static/gallery/bg3.webp') no-repeat center center fixed, 
+                linear-gradient(120deg, #ff7eb3, #ff758c, hsl(335, 65%, 46%));
+    background-size: cover, 300% 300%;
+    animation: gradientShift 10s ease infinite;
+    color: #333;
+}
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+
+        .navbar .nav-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .contact-section {
+            padding: 2rem;
+            max-width: 900px;
+            margin: 5rem auto;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-section h1 {
+            text-align: center;
+            color: #e63946;
+        }
+
+        .contact-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-section form label {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        .contact-section form input,
+        .contact-section form textarea {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .contact-section form button {
+            padding: 0.8rem;
+            margin-top: 1rem;
+            background-color: #e63946;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .contact-section form button:hover {
+            background-color: #d62828;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <h2>Art Gallery</h2>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'gallery' %}">Gallery</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'cart' %}">Cart</a>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section">
+        <h1>Contact Us</h1>
+        
+        <p>If you have any questions, inquiries, or would like more information about our artworks, please feel free to reach out to us. We would love to hear from you!</p>
+        
+        {% if message %}
+            <div class="message">
+                <p>{{ message }}</p>
+            </div>
+        {% endif %}
+        
+        <form method="POST" action="{% url 'contact' %}">
+            {% csrf_token %}
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number (optional):</label>
+            <input type="text" id="phone" name="phone">
+
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Art Gallery. All Rights Reserved.</p>
+    </div>
+</body>
+</html>

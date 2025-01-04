@@ -1,0 +1,33 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{ razorpay_key_id }}",
+        "amount": "{{ total_price|floatformat:0 }}00",  // Amount in paise
+        "currency": "INR",
+        "name": "Art Gallery",
+        "description": "Order #{{ order_id }}",
+        "order_id": "{{ razorpay_order_id }}",
+        "handler": function(response) {
+            // Handle successful payment
+            fetch("{% url 'payment_success' %}", {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                body: JSON.stringify({
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    order_id: '{{ order_id }}',  // Pass order_id here
+                })
+            }).then(res => window.location.href = "{% url 'order_history' %}");
+        },
+        "prefill": {
+            "name": "{{ user.first_name }}",
+            "email": "{{ user.email }}",
+            "contact": "{{ user.profile.phone_number }}"  // Optional, replace with user phone number
+        },
+        "theme": {
+            "color": "#F37254"
+        }
+    };
+    var rzp = new Razorpay(options);
+    rzp.open();
+</script>
